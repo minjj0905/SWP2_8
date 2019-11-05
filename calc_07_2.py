@@ -62,6 +62,9 @@ class Calculator(QWidget):
         mainLayout.addLayout(constLayout, 2, 0)
         mainLayout.addLayout(funcLayout, 2, 1)
 
+        #Status
+        self.isError = False
+
 
         self.setLayout(mainLayout)
 
@@ -72,11 +75,15 @@ class Calculator(QWidget):
     def buttonClicked(self):
         button = self.sender()
         key = button.text()
+        if self.isError:
+            self.isError = False
+            self.display.setText('')
         if key == '=':
             try:
                 result = str(eval(self.display.text()))
             except:
                 result = 'Error!'
+                self.isError = True
             self.display.setText(result)
         elif key == 'C':
             self.display.setText('')
