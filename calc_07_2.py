@@ -85,7 +85,7 @@ class Calculator(QWidget):
         button = self.sender()
         key = button.text()
         if self.isError:
-            self.isDotUsed = True
+            self.isDotUsed = False
             self.isError = False
             self.display.setText('')
         if key == '=':
