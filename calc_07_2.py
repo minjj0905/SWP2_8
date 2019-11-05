@@ -85,11 +85,14 @@ class Calculator(QWidget):
         button = self.sender()
         key = button.text()
         if self.isError:
-            self.isDotUsed = False
             self.isError = False
             self.display.setText('')
+
+        if key in operatorList :
+            self.isDotUsed = False
         if key == '=':
             try:
+                self.isDotUsed = False
                 result = self.removeUselessZero(self.display.text())
                 result = str(eval(result))
             except:
