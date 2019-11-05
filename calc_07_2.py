@@ -64,7 +64,7 @@ class Calculator(QWidget):
 
         #Status
         self.isError = False
-
+        self.isDotUsed = False
 
         self.setLayout(mainLayout)
 
@@ -80,13 +80,12 @@ class Calculator(QWidget):
 
         return text[a:]
 
-
-
         
     def buttonClicked(self):
         button = self.sender()
         key = button.text()
         if self.isError:
+            self.isDotUsed = True
             self.isError = False
             self.display.setText('')
         if key == '=':
@@ -99,6 +98,12 @@ class Calculator(QWidget):
             self.display.setText(result)
         elif key == 'C':
             self.display.setText('')
+
+        elif key == '.':
+            if not self.isDotUsed:
+                self.isDotUsed = True
+                self.display.setText(self.display.text() + key)
+
         else:
             self.display.setText(self.display.text() + key)
 
