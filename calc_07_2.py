@@ -70,7 +70,18 @@ class Calculator(QWidget):
 
         self.setWindowTitle("My Calculator")
 
-        
+    def removeUselessZero(self, text):
+        a = 0
+        for i in text:
+            print(i)
+            if i != '0':
+                break
+            a += 1
+
+        return text[a:]
+
+
+
         
     def buttonClicked(self):
         button = self.sender()
@@ -80,7 +91,8 @@ class Calculator(QWidget):
             self.display.setText('')
         if key == '=':
             try:
-                result = str(eval(self.display.text()))
+                result = self.removeUselessZero(self.display.text())
+                result = str(eval(result))
             except:
                 result = 'Error!'
                 self.isError = True
