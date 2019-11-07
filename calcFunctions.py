@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+import math
+
 def factorial(numStr):
     num = 1
     for i in range(1, numStr + 1):
@@ -13,9 +14,6 @@ def decToBin(numStr):
 
 def binToDec(numStr):
     return int(numStr, 2)
-
-=======
-import math
 
 def decToRoman(numStr):
     try:
@@ -40,6 +38,3 @@ def decToRoman(numStr):
 
     return result
 
-if __name__ == '__main__':
-    print (decToRoman(3))
->>>>>>> 6004868a65eb655be4e16f93011ef3281335cd2c
