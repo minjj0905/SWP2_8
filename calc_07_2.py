@@ -90,10 +90,12 @@ class Calculator(QWidget):
 
         if key in operatorList :
             self.isDotUsed = False
+
         elif key in functionList:
             n = self.display.text()
             value = functionMap[functionList.index(key)][1](n)
             self.display.setText(str(value))
+            
         if key == '=':
             try:
                 self.isDotUsed = False
