@@ -51,7 +51,7 @@ class Calculator(QWidget):
                 c += 1
                 if c>= buttonPad['columns']:
                     c = 0; r += 1
-        
+
 
         #layout
         mainLayout = QGridLayout()
@@ -91,20 +91,28 @@ class Calculator(QWidget):
             return False
         return True
 
+    def clearDisplay(self):
+        self.display.setText('')
 
-        
+
+
     def buttonClicked(self):
         button = self.sender()
         key = button.text()
         if self.isError:
             self.isError = False
-            self.display.setText('')
+            self.clearDisplay()
 
         if key in functionList:
             n = self.display.text()
-            value = functionMap[functionList.index(key)][1](n)
-            self.display.setText(str(value))
-            
+            try:
+                value = functionMap[functionList.index(key)][1](n)
+                self.display.setText(str(value))
+            except:
+                self.display.setText('Error!')
+                self.isError = True
+
+
         elif key == '=':
             try:
                 result = self.removeUselessZero(self.display.text())
@@ -114,8 +122,8 @@ class Calculator(QWidget):
                 self.isError = True
             self.display.setText(result)
         elif key == 'C':
-            self.display.setText('')
-        
+            self.clearDisplay()
+
         elif key == 'pi':
             if self.validateDot(self.display.text()):
                 self.display.setText(self.display.text()+'3.141592')
@@ -125,7 +133,7 @@ class Calculator(QWidget):
 
         elif key == '소리의 이동 속도 (m/s)':
             self.display.setText(self.display.text()+'340')
-        
+
         elif key == '태양과의 평균 거리 (km)':
             self.display.setText(self.display.text()+str(int(1.5E+8)))
 
