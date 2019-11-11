@@ -10,13 +10,7 @@ def binToDec(numStr):
     return int(numStr, 2)
 
 def decToRoman(numStr):
-    try:
-        n = int(numStr)
-    except:
-        return 'Error'
-    
-    if n>= 4000:
-        return 'Error'
+    n = int(numStr)
     
     romans = [
         (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
