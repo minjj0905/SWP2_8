@@ -1,11 +1,7 @@
 import math
 
 def factorial(numStr):
-    num = 1
-    for i in range(1, numStr + 1):
-        num *= i
-
-    return num
+    return math.factorial(int(numStr))
 
 def decToBin(numStr):
     return format(int(numStr), 'b')
