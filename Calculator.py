@@ -85,6 +85,8 @@ class Calculator(QWidget):
         for i in inputStr:
             if i == '.':
                 a += 1
+            if i in operatorList:
+                a -= 1
         if a >= 1:
             return False
         return True
