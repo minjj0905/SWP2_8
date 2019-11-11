@@ -65,7 +65,6 @@ class Calculator(QWidget):
 
         #Status
         self.isError = False
-        self.isDotUsed = False
 
         self.setLayout(mainLayout)
 
@@ -81,6 +80,16 @@ class Calculator(QWidget):
 
         return text[a:]
 
+    def validateDot(self, inputStr):
+        a = 0
+        for i in inputStr:
+            if i == '.':
+                a += 1
+        if a >= 1:
+            return False
+        return True
+
+
         
     def buttonClicked(self):
         button = self.sender()
@@ -89,9 +98,6 @@ class Calculator(QWidget):
             self.isError = False
             self.display.setText('')
 
-        if key in operatorList :
-            self.isDotUsed = False
-
         if key in functionList:
             n = self.display.text()
             value = functionMap[functionList.index(key)][1](n)
@@ -99,7 +105,6 @@ class Calculator(QWidget):
             
         elif key == '=':
             try:
-                self.isDotUsed = False
                 result = self.removeUselessZero(self.display.text())
                 result = str(eval(result))
             except:
@@ -109,9 +114,9 @@ class Calculator(QWidget):
         elif key == 'C':
             self.display.setText('')
         
-        elif key == 'pi' and not self.isDotUsed:
-            self.display.setText(self.display.text()+'3.141592')
-            self.isDotUsed = True
+        elif key == 'pi':
+            if self.validateDot(self.display.text()):
+                self.display.setText(self.display.text()+'3.141592')
 
         elif key == '빛의 이동 속도 (m/s)':
             self.display.setText(self.display.text()+str(int(3E+8)))
@@ -123,10 +128,8 @@ class Calculator(QWidget):
             self.display.setText(self.display.text()+str(int(1.5E+8)))
 
         elif key == '.':
-            if not self.isDotUsed:
-                self.isDotUsed = True
+            if self.validateDot(self.display.text()):
                 self.display.setText(self.display.text() + key)
-
         else:
             self.display.setText(self.display.text() + key)
 
