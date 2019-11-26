@@ -1,5 +1,9 @@
+from termcolor import colored
+import string
+
+
 class Guess:
-    
+
     def __init__(self, word):
         self.word = word
         self.guessedChars = []
@@ -8,7 +12,15 @@ class Guess:
 
     def display(self):
         print('\n')
-        self.currentList = ["▢"]*len(self.word)
+        self.currentList = ["▢"] * len(self.word)
+        print("used letter: ")
+        for i in string.ascii_lowercase:
+            if i in self.guessedChars:
+                print(colored(i, 'red'), end=' ')
+            else:
+                print(colored(i, 'green'), end=' ')
+        print()
+        print()
         for i, j in self.foundChars:
             self.currentList[j] = i
         print(" ".join(self.currentList))
