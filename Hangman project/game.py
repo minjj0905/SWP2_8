@@ -1,6 +1,9 @@
 from hangman import Hangman
 from guess import Guess
 from word import Word
+from termcolor import colored
+import string
+
 
 def gameMain():
     word = Word('words.txt')
@@ -8,13 +11,21 @@ def gameMain():
 
     finished = False
     hangman = Hangman()
-    maxTries = hangman.getLife()
 
-    while guess.numTries < maxTries:
+    while hangman.remainingLives > 0:
 
-        display = hangman.get(maxTries - guess.numTries)
+        display = hangman.currentShape()
         print(display)
-        guess.display()
+        guess.displayCurrent()
+        print("used letter: ")
+        print()
+        for i in string.ascii_lowercase:
+            if i in guess.guessedChars:
+                print(colored(i, 'red'), end=' ')
+            else:
+                print(colored(i, 'green'), end=' ')
+        print()
+        print()
 
         guessedChar = input('Select a letter: ')
         if len(guessedChar) != 1:
@@ -24,16 +35,20 @@ def gameMain():
             print('You already guessed \"' + guessedChar + '\"')
             continue
 
-        finished = guess.guess(guessedChar)
-        if finished == True:
+        success = guess.guess(guessedChar)
+        print(success)
+        if not success:
+            hangman.decreaseLife()
+        if guess.finished():
             break
 
-    if finished == True:
+    if guess.finished():
+        print(guess.displayCurrent())
         print('Success')
     else:
-        print(hangman.get(0))
-        print('word [' + guess.secretWord + ']')
-        print('guess [' + guess.currentStatus + ']')
+        print(hangman.currentShape())
+        print(guess.secretWord)
+        guess.displayCurrent()
         print('Fail')
 
 

@@ -1,42 +1,33 @@
-from termcolor import colored
-import string
+
 
 
 class Guess:
 
     def __init__(self, word):
-        self.word = word
+        self.secretWord = word
         self.guessedChars = []
-        self.numTries = 0
         self.foundChars = []
 
-    def display(self):
-        print('\n')
-        self.currentList = ["▢"] * len(self.word)
-        print("used letter: ")
-        for i in string.ascii_lowercase:
-            if i in self.guessedChars:
-                print(colored(i, 'red'), end=' ')
-            else:
-                print(colored(i, 'green'), end=' ')
-        print()
-        print()
+    def displayCurrent(self):
+        self.currentList = ["▢"] * len(self.secretWord)
         for i, j in self.foundChars:
             self.currentList[j] = i
         print(" ".join(self.currentList))
+        return self.currentList
+
+    def displayGuessed(self):
+        return self.foundChars
 
     def guess(self, character):
-        if character not in self.word:
-            self.numTries += 1
         if character not in self.guessedChars:
             self.guessedChars.append(character)
-            for i in range(len(self.word)):
-                if character == self.word[i]:
+            for i in range(len(self.secretWord)):
+                if character == self.secretWord[i]:
                     self.foundChars.append((character, i))
-        if len(self.foundChars) == len(self.word):
-            return True
-        else:
-            return False
+        return character in self.secretWord
+
+    def finished(self):
+        return len(self.foundChars) == len(self.secretWord)
 
 
 if __name__ == '__main__':
@@ -45,5 +36,3 @@ if __name__ == '__main__':
         char = input("Select a letter: ")
         if G.guess(char):
             break
-        G.display()
-    G.display()
